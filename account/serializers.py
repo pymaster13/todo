@@ -99,7 +99,7 @@ class LoginUserSerializer(serializers.Serializer):
             User object
     """
     username = serializers.CharField(required=True, error_messages={'blank': 'Логин не может быть пустым.'})
-    password = serializers.CharField(required=True, error_messages={'blank': 'Электронная почта не может быть пустой.'})
+    password = serializers.CharField(required=True, error_messages={'blank': 'Пароль не может быть пустым.'})
 
     def validate(self, data):
         user = authenticate(**data)

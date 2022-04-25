@@ -19,11 +19,8 @@ def create_todo(content: str, user: User) -> Todo:
 def delete_todo(id: int, user: User) -> Todo:
     """Help function for deleting todo"""
 
-    print(id)
-
     try:
         todo = Todo.objects.get(id=id)
-        print(todo)
     except Exception:
         raise GetTodoError('Такой заметки в БД нет.')
 
@@ -32,3 +29,4 @@ def delete_todo(id: int, user: User) -> Todo:
             'Пользователь не может удалить чужую заметку.')
 
     todo.delete()
+    return id

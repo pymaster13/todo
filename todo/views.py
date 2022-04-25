@@ -77,7 +77,7 @@ class DeleteTodoView(GenericAPIView):
 
     def post(self, request):
         try:
-            delete_todo(request.data['id'], request.user)
-            return Response(status=HTTP_200_OK)
+            id = delete_todo(request.data['id'], request.user)
+            return Response({'id': id}, status=HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=HTTP_400_BAD_REQUEST)
