@@ -3,14 +3,13 @@ import { useDispatch } from "react-redux";
 import classes from "./Modal.module.css";
 import { clearErrorModalAction } from "../../../store/actions/todo";
 
-const Modal = ({ children, visible, setVisible }) => {
+export const Modal = ({ children, visible, setVisible }) => {
   const rootClasses = [classes.myModal];
+  const dispatch = useDispatch();
 
   if (visible) {
     rootClasses.push(classes.active);
   }
-
-  const dispatch = useDispatch();
 
   const closeModal = () => {
     setVisible(false);
@@ -28,5 +27,3 @@ const Modal = ({ children, visible, setVisible }) => {
     </div>
   );
 };
-
-export default Modal;

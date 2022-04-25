@@ -1,13 +1,13 @@
 import { React } from "react";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { LoginForm } from "./components/auth/LoginForm";
 import { RegisterForm } from "./components/auth/RegisterForm";
 import { Logout } from "./components/auth/Logout";
-import NavBar from "./components/UI/navbar/NavBar";
+import { NavBar } from "./components/UI/navbar/NavBar";
 import { TodoList } from "./components/todos/TodoList";
-import NoMatch from "./pages/NoMatch";
-import Home from "./pages/Home";
+import { NoMatch } from "./pages/NoMatch";
+import { Home } from "./pages/Home";
 import { UpdateUserForm } from "./components/auth/UpdateUserForm";
 import { TodoById } from "./components/todos/TodoById";
 

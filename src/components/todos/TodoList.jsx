@@ -1,12 +1,13 @@
-﻿import React, { useState } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { Navigate } from "react-router";
+
 import { getTodos } from "../../store/actions/todo";
 import { Todo } from "./Todo";
 import { Button } from "../UI/button/Button";
-import Modal from "../UI/modal/Modal";
+import { Modal } from "../UI/modal/Modal";
 import { TodoForm } from "./TodoForm";
-import { Navigate } from "react-router";
+import { Spinner } from "../UI/spinner/Spinner";
 
 export const TodoList = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,6 @@ export const TodoList = () => {
   useEffect(() => {
     getTodos(dispatch);
   }, []);
-
-  // AFTER CREATING TODO
-  useEffect(() => {
-    if (!modal) {
-      getTodos(dispatch);
-    }
-  }, [modal]);
 
   if (!localStorage.getItem("token")) {
     return <Navigate to="/login" />;
@@ -40,6 +34,9 @@ export const TodoList = () => {
         >
           Создать заметку
         </Button>
+
+        {todosState.isLoading ? <Spinner /> : <div></div>}
+
         <div style={{ display: "flex", flexDirection: "column-reverse" }}>
           {todosState.todos && todosState.todos != null
             ? todosState.todos.map((item) => <Todo key={item.id} {...item} />)

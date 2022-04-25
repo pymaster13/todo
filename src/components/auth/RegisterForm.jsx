@@ -1,12 +1,13 @@
-﻿import { React, useState } from "react";
+﻿import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import cls from "../../styles/AuthForm.module.css";
-import { registerUser } from "../../store/actions/auth";
+import { clearSuccessErrors, registerUser } from "../../store/actions/auth";
 import { handleErrors } from "../../services";
 import { Input } from "../UI/input/Input";
 import { Button } from "../UI/button/Button";
+
+import cls from "../../styles/AuthForm.module.css";
 
 export const RegisterForm = () => {
   const [user, setUser] = useState({
@@ -18,6 +19,10 @@ export const RegisterForm = () => {
 
   const userState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    clearSuccessErrors(dispatch);
+  }, []);
 
   if (localStorage.getItem("token")) {
     return <Navigate to="/todos" />;
@@ -31,7 +36,7 @@ export const RegisterForm = () => {
         className={cls.form}
         onSubmit={(e) => {
           e.preventDefault();
-          registerUser(user, dispatch, setUser);
+          registerUser(user, dispatch);
         }}
       >
         <Input
@@ -66,11 +71,13 @@ export const RegisterForm = () => {
           value={user.password2}
           onChange={(e) => setUser({ ...user, password2: e.target.value })}
         />
-        <span className={cls.span__error}>
-          {userState.errors && userState.errors != null
-            ? handleErrors(userState.errors)
-            : ""}
-        </span>
+        {userState.errors ? (
+          <div className="alert alert-danger" role="alert">
+            {handleErrors(userState.errors)}
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div className={cls.btn}>
           <Button
             style={{ marginTop: "10px" }}

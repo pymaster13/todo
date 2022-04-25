@@ -10,12 +10,14 @@
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
   USER_LOADING_FAIL,
+  CLEAR_SUCCESS_ERRORS,
 } from "../actions/types";
 
 const initialState = {
   isLoading: false,
   user: null,
   errors: null,
+  success: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -110,12 +112,21 @@ const authReducer = (state = initialState, action) => {
           email: action.payload.email,
         },
         errors: null,
+        success: "Данные успешно изменены!",
+      };
+
+    case CLEAR_SUCCESS_ERRORS:
+      return {
+        ...state,
+        errors: null,
+        success: null,
       };
 
     case UPDATE_USER_FAIL:
       return {
         ...state,
         errors: action.payload,
+        success: null,
       };
 
     default:

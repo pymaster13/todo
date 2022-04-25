@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getTodos } from "../../store/actions/todo";
 import { Button } from "../UI/button/Button";
 import { Input } from "../UI/input/Input";
-import { useDispatch, useSelector } from "react-redux";
 import { createTodoAction } from "../../store/actions/todo";
-import cls from "../../styles/AuthForm.module.css";
 
 export const TodoForm = ({ setVisible }) => {
   const [todoContent, setTodoContent] = useState("");
@@ -15,7 +16,10 @@ export const TodoForm = ({ setVisible }) => {
   const createTodo = (e) => {
     e.preventDefault();
     createTodoAction(dispatch, todoContent, setVisible);
-    setTodoContent("");
+    if (todoContent) {
+      setTimeout(() => getTodos(dispatch), 100);
+      setTodoContent("");
+    }
   };
 
   return (
@@ -26,9 +30,13 @@ export const TodoForm = ({ setVisible }) => {
           onChange={(e) => setTodoContent(e.target.value)}
           placeholder="Содержание заметки"
         />
-        <span className={cls.span__error}>
-          {todoState.errors && todoState.errors != null ? todoState.errors : ""}
-        </span>
+        {todoState.errors ? (
+          <div className="alert alert-danger" role="alert">
+            {todoState.errors}
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button style={{ marginTop: "10px" }} className="btn btn-primary">
             Создать

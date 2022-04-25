@@ -27,7 +27,6 @@ const todoReducer = (state = initialState, action) => {
       };
 
     case TODOS_LOADED:
-      console.log(action.payload);
       return {
         ...state,
         isLoading: false,
@@ -79,13 +78,6 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-      };
-
-    case TODO_CREATE_FAIL:
-      return {
-        ...state,
-        isLoading: false,
-        errors: action.payload,
       };
 
     case TODO_CLOSE_MODAL:

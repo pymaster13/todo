@@ -1,18 +1,21 @@
 ﻿import React from "react";
-import cls from "../../styles/Todo.module.css";
-import { Button } from "../UI/button/Button";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "../UI/button/Button";
 import { deleteTodoAction } from "../../store/actions/todo";
 import { getTodos } from "../../store/actions/todo";
+
+import cls from "../../styles/Todo.module.css";
 
 export const Todo = (todo) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const deleteTodoAndRefreshTodos = () => {
-    deleteTodoAction(dispatch, todo.id, navigate);
-    getTodos(dispatch);
+    deleteTodoAction(dispatch, todo.id);
+    setTimeout(() => {
+      getTodos(dispatch);
+    }, 100);
   };
 
   return (

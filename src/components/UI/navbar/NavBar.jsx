@@ -1,12 +1,10 @@
 ﻿import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { useNavigate } from "react-router";
 
-import { Button } from "../button/Button";
-import { getUserInfo, logoutUser } from "../../../store/actions/auth";
+import { getUserInfo } from "../../../store/actions/auth";
 
-const NavBar = () => {
+export const NavBar = () => {
   const userState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -18,9 +16,9 @@ const NavBar = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <a className="navbar-brand" href="#">
             ToDo
-          </Link>
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -101,10 +99,7 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-
       <Outlet />
     </div>
   );
 };
-
-export default NavBar;

@@ -11,6 +11,7 @@
   TODO_DELETED,
   TODO_DELETE_FAIL,
 } from "./types";
+
 import TodoService from "../../API/TodoService";
 
 export const getTodos = async (dispatch) => {
@@ -18,7 +19,6 @@ export const getTodos = async (dispatch) => {
 
   try {
     const response = await TodoService.getAllTodos();
-
     dispatch({
       type: TODOS_LOADED,
       payload: response.data,
@@ -45,19 +45,21 @@ export const createTodoAction = async (dispatch, content, setVisibleModal) => {
     });
 
     setVisibleModal(false);
+
+    dispatch({
+      type: TODO_CLOSE_MODAL,
+    });
   } catch (err) {
     dispatch({ type: TODO_CREATE_FAIL, payload: err.response.data });
   }
 };
 
-export const deleteTodoAction = async (dispatch, id, navigate) => {
+export const deleteTodoAction = async (dispatch, id) => {
   try {
     await TodoService.deleteTodo(id);
     dispatch({
       type: TODO_DELETED,
     });
-
-    navigate("/todos");
   } catch (err) {
     dispatch({ type: TODO_DELETE_FAIL, payload: err.response.data });
   }
